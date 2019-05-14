@@ -1,0 +1,18 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "ru.job4j.model.Item" table = "item">
+
+        <id name = "id" type = "int" column = "item_id">
+            <generator class="identity"/>
+        </id>
+
+        <property name="description" column="description"/>
+        <property name="created" column="created"/>
+        <property name="done" column="done"/>
+
+    </class>
+</hibernate-mapping>

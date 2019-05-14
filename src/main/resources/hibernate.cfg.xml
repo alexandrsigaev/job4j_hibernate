@@ -28,6 +28,7 @@
         <property name="use_sql_comments">true</property>
 
         <mapping resource="ru/job4j/model/User.hbm.xml"/>
+        <mapping resource="ru/job4j/model/Item.hbm.xml"/>
 
     </session-factory>
 
