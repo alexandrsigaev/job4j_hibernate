@@ -3,17 +3,17 @@ package ru.job4j.repositories;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import ru.job4j.model.Item;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ItemDaoImpl implements ItemDao<Item, Integer> {
 
-    private Session currentSession;
-    private Transaction currentTransaction;
     private static final ItemDaoImpl ITEM_DAO = new ItemDaoImpl();
+    private final SessionFactory factory = new Configuration().configure().buildSessionFactory();
 
     private ItemDaoImpl() {
     }
@@ -22,68 +22,57 @@ public class ItemDaoImpl implements ItemDao<Item, Integer> {
         return ITEM_DAO;
     }
 
-    public Session openCurrentSession() {
-        currentSession = getSessionFactory().openSession();
-        return currentSession;
-    }
-
-    public Session openCurrentSessionWithTransaction() {
-        currentSession = getSessionFactory().openSession();
-        currentTransaction = currentSession.beginTransaction();
-        return currentSession;
-    }
-
-    public void closeCurrentSession() {
-        currentSession.close();
-    }
-
-    public void closeCurrentSessionWithTransaction() {
-        currentTransaction.commit();
-        currentSession.close();
-    }
-
-    private static SessionFactory getSessionFactory() {
-        return new Configuration().configure().buildSessionFactory();
-    }
-
-    public Session getCurrentSession() {
-        return currentSession;
-    }
-
-    public void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-    public Transaction getCurrentTransaction() {
-        return currentTransaction;
-    }
-
-    public void setCurrentTransaction(Transaction currentTransaction) {
-        this.currentTransaction = currentTransaction;
-    }
-
     @Override
     public void persist(Item entity) {
-        getCurrentSession().save(entity);
+        this.tx(session -> session.save(entity));
     }
 
     @Override
     public void update(Item entity) {
-        getCurrentSession().update(entity);
+        this.vtx(session -> session.update(entity));
     }
 
     @Override
     public Item findById(Integer id) {
-        return (Item) getCurrentSession().get(Item.class, id);
+        return this.tx(session -> session.get(Item.class, id));
     }
 
     @Override
     public void delete(Item entity) {
-        getCurrentSession().delete(entity);
+        this.vtx(session -> session.delete(entity));
     }
 
     @Override
     public List<Item> findAll() {
-        return getCurrentSession().createQuery("from Item", Item.class).list();
+        return this.tx(session -> session.createQuery("from Item", Item.class).list());
+    }
+
+    private <T> T tx(final Function<Session, T> command) {
+        final Session session = factory.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            T rsl = command.apply(session);
+            tx.commit();
+            return rsl;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    private void vtx(final Consumer<Session> command) {
+        final Session session = factory.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            command.accept(session);
+            tx.commit();
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 }
