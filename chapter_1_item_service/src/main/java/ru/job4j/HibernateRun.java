@@ -21,11 +21,11 @@ public class HibernateRun {
         User user = new User("Aleksandr", Calendar.getInstance());
 
         session.beginTransaction();
-        Serializable user_id = session.save(user);
+        Serializable userId = session.save(user);
         session.getTransaction().commit();
 
         session.beginTransaction();
-        User userFromDB = session.get(User.class, user_id);
+        User userFromDB = session.get(User.class, userId);
         session.getTransaction().commit();
 
         userFromDB.setName("Oleg");

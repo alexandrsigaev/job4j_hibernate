@@ -49,12 +49,16 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return id == user.id &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(expired, user.expired);
+        return id == user.id
+                && Objects.equals(name, user.name)
+                && Objects.equals(expired, user.expired);
     }
 
     @Override
@@ -64,10 +68,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", expired=" + expired.getTime().toString() +
-                '}';
+        return "User{"
+                + "id=" + id
+                + ", name='" + name
+                + '\'' + ", expired="
+                + expired.getTime().toString()
+                + '}';
     }
 }

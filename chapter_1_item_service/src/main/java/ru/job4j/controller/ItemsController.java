@@ -1,7 +1,6 @@
 package ru.job4j.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import ru.job4j.model.Item;
 import ru.job4j.service.ItemService;
@@ -15,14 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @WebServlet(name = "ItemController", urlPatterns = "/item", loadOnStartup = 1)
 public class ItemsController extends HttpServlet {
 
-    private final ItemService itemService= ItemServiceImpl.getInstance();
+    private final ItemService itemService = ItemServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
