@@ -1,0 +1,17 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "ru.job4j.model.CarImage" table = "car_image">
+
+        <id name = "id" type = "int" column = "image_id">
+            <generator class="identity"/>
+        </id>
+
+        <many-to-one name="carItem" column="id_car_item" not-null="true" class="ru.job4j.model.CarItem"/>
+        <property name="path" column="image_path" not-null="true"/>
+
+    </class>
+</hibernate-mapping>
