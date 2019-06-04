@@ -64,7 +64,7 @@ public class PersonTest {
     public void whenGetListCarItemsFromUser() {
         startTest((session, person) -> {
 
-            CarColor testColor = new CarColor("blackberry");
+            CarColor testColor = new CarColor("blackberry4");
             session.save(testColor);
 
             Car testCar = new Car(2011, "Toyota", "Camry", "universal", "AWD",

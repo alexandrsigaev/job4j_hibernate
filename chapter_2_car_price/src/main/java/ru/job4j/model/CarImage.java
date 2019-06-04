@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "car_image")
 public class CarImage {
 
     @Id

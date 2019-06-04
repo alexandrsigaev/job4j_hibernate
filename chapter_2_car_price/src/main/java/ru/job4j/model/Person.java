@@ -33,8 +33,7 @@ public class Person {
     @Column(name = "create_user_date", nullable = false)
     private LocalDate createDate;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car_item_id")
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     @JsonBackReference
     private List<CarItem> carItems;
 

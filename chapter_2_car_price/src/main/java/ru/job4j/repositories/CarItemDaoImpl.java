@@ -1,6 +1,5 @@
 package ru.job4j.repositories;
 
-import org.hibernate.query.Query;
 import ru.job4j.model.Car;
 import ru.job4j.model.CarItem;
 
@@ -66,10 +65,9 @@ public class CarItemDaoImpl implements CarItemDao<CarItem, Integer> {
 
     @Override
     public List<CarItem> findAllUserItem(int id) {
-        return HibernateUtil.tx(session -> {
-            return session.createQuery("from CarItem item where item.person.id =: id", CarItem.class)
+        return HibernateUtil.tx(session ->
+                session.createQuery("from CarItem item where item.person.id =: id", CarItem.class)
                     .setParameter("id", id)
-                    .list();
-        });
+                    .list());
     }
 }

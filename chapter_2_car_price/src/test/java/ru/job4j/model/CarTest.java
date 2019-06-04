@@ -19,7 +19,7 @@ public class CarTest {
 
     @Before
     public void setUp() {
-        testColor = new CarColor("blackberry");
+        testColor = new CarColor("blackberry3");
 
     }
 

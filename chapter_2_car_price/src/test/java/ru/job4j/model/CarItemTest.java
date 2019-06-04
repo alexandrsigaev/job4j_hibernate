@@ -25,7 +25,7 @@ public class CarItemTest {
     public void setUp() {
         person = new Person("login", "pwrd", "Name", "email@123.com",
                 "1234567890", LocalDate.now());
-        testColor = new CarColor("blackberry");
+        testColor = new CarColor("blackberry2");
         testCar = new Car(2011, "Toyota", "Camry", "universal", "AWD",
                 "Automatic", "2.5", 2500000, 3, testColor,
                 "08236567IUN655");

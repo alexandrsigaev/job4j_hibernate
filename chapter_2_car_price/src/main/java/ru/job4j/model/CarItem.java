@@ -16,7 +16,7 @@ public class CarItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_person", nullable = false)
     @JsonIgnore
     private Person person;
